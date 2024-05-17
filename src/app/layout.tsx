@@ -1,6 +1,12 @@
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+
+import Navbar from "@/components/navbar/Navbar";
+import Footer from "@/components/footer/Footer";
+import { useState } from "react";
+import { AppWrapper } from "@/contexts/UserContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,9 +20,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        {/* Add any necessary meta tags, title, stylesheets, etc. */}
+      </head>
+      <body className={inter.className}>
+      <AppWrapper>
+        <Navbar />
+        {children}
+        <Footer />
+      </AppWrapper>
+      
+      </body>
     </html>
   );
 }
