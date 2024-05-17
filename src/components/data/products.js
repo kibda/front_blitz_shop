@@ -13,6 +13,27 @@ export const products = [
       price: 39.99,
       image: '/placeholder.svg',
     },
+    {
+      id: 3,
+      name: 'zebi',
+      description: 'A warm and stylish sweater for the winter.',
+      price: 69.69,
+      image: '/placeholder.svg',
+    },
+    {
+      id: 4,
+      name: 'pussycat',
+      description: 'A warm and stylish sweater for the winter.',
+      price: 69.99,
+      image: '/placeholder.svg',
+    },
+    {
+      id: 5,
+      name: 'hanami!',
+      description: 'A warm and stylish sweater for the winter.',
+      price: 420.69,
+      image: '/placeholder.svg',
+    },
     // Add more product objects here
   ];
   

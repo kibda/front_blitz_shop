@@ -12,7 +12,7 @@ const Shop = () => {
   );
 
   return (
-    <div className="bg-white dark:bg-gray-950 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="bg-gray-950 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Shop Our Collection</h1>
@@ -29,9 +29,9 @@ const Shop = () => {
           </div>
         
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6  ">
           {filteredProducts.map((product) => (
-            <div key={product.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+            <div key={product.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
               <img
                 alt="Product Image"
                 className="w-full h-48 object-cover"

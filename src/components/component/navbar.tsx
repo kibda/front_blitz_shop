@@ -3,12 +3,14 @@ import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 import { DropdownMenuTrigger, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { JSX, SVGProps } from "react"
+import { CloudLightningIcon } from "lucide-react";
 
 export const Navbar=() => {
   return (
     <header className="flex h-16 w-full items-center justify-between px-4 md:px-6 bg-yellow-400 border-b border-black shadow-md">
       <Link className="flex items-center gap-2 font-semibold" href="#">
-        <span className="text-black">blitz-shop</span>
+      <CloudLightningIcon className="w-8 h-8 text-gray-900 dark:text-gray-50" />
+        <span className="text-black">BLITZ-SHOP</span>
         <Separator className="h-6 border-r border-black mx-2" orientation="vertical" />
         <Link
           className="text-sm font-medium hover:underline underline-offset-4 text-black transition-all duration-300 ease-in-out transform hover:scale-105"
