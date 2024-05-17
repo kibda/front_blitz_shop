@@ -1,8 +1,9 @@
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { JSX, SVGProps } from "react"
+import {products} from "../data/products"
 
-export const Shop=() => {
+const Shop = () => {
   return (
     <div className="bg-white dark:bg-gray-950 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -18,189 +19,38 @@ export const Shop=() => {
               type="text"
             />
           </div>
+        
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-            <img
-              alt="Product Image"
-              className="w-full h-48 object-cover"
-              height={300}
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "400/300",
-                objectFit: "cover",
-              }}
-              width={400}
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">Stylish T-Shirt</h3>
-              <p className="text-gray-700 dark:text-gray-400 mb-4">A comfortable and fashionable t-shirt.</p>
-              <div className="flex items-center justify-between">
-                <span className="text-indigo-600 font-medium">$24.99</span>
-                <Button size="sm">Add to Cart</Button>
+          {products.map((product) => (
+            <div key={product.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+              <img
+                alt="Product Image"
+                className="w-full h-48 object-cover"
+                src={product.image}
+                style={{
+                  aspectRatio: '400/300',
+                  objectFit: 'cover',
+                }}
+              />
+              <div className="p-4">
+                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">{product.name}</h3>
+                <p className="text-gray-700 dark:text-gray-400 mb-4">{product.description}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-indigo-600 font-medium">${product.price}</span>
+                  <Button size="sm">Add to Cart</Button>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-            <img
-              alt="Product Image"
-              className="w-full h-48 object-cover"
-              height={300}
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "400/300",
-                objectFit: "cover",
-              }}
-              width={400}
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">Cozy Sweater</h3>
-              <p className="text-gray-700 dark:text-gray-400 mb-4">A warm and stylish sweater for the winter.</p>
-              <div className="flex items-center justify-between">
-                <span className="text-indigo-600 font-medium">$39.99</span>
-                <Button size="sm">Add to Cart</Button>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-            <img
-              alt="Product Image"
-              className="w-full h-48 object-cover"
-              height={300}
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "400/300",
-                objectFit: "cover",
-              }}
-              width={400}
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">Leather Backpack</h3>
-              <p className="text-gray-700 dark:text-gray-400 mb-4">A durable and stylish backpack for everyday use.</p>
-              <div className="flex items-center justify-between">
-                <span className="text-indigo-600 font-medium">$59.99</span>
-                <Button size="sm">Add to Cart</Button>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-            <img
-              alt="Product Image"
-              className="w-full h-48 object-cover"
-              height={300}
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "400/300",
-                objectFit: "cover",
-              }}
-              width={400}
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">Wireless Headphones</h3>
-              <p className="text-gray-700 dark:text-gray-400 mb-4">
-                High-quality wireless headphones for music lovers.
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-indigo-600 font-medium">$79.99</span>
-                <Button size="sm">Add to Cart</Button>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-            <img
-              alt="Product Image"
-              className="w-full h-48 object-cover"
-              height={300}
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "400/300",
-                objectFit: "cover",
-              }}
-              width={400}
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">Minimalist Watch</h3>
-              <p className="text-gray-700 dark:text-gray-400 mb-4">A sleek and modern watch for everyday wear.</p>
-              <div className="flex items-center justify-between">
-                <span className="text-indigo-600 font-medium">$49.99</span>
-                <Button size="sm">Add to Cart</Button>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-            <img
-              alt="Product Image"
-              className="w-full h-48 object-cover"
-              height={300}
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "400/300",
-                objectFit: "cover",
-              }}
-              width={400}
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">Fitness Tracker</h3>
-              <p className="text-gray-700 dark:text-gray-400 mb-4">
-                Track your fitness goals with this advanced tracker.
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-indigo-600 font-medium">$99.99</span>
-                <Button size="sm">Add to Cart</Button>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-            <img
-              alt="Product Image"
-              className="w-full h-48 object-cover"
-              height={300}
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "400/300",
-                objectFit: "cover",
-              }}
-              width={400}
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">Portable Speaker</h3>
-              <p className="text-gray-700 dark:text-gray-400 mb-4">
-                Enjoy high-quality sound on the go with this portable speaker.
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-indigo-600 font-medium">$69.99</span>
-                <Button size="sm">Add to Cart</Button>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-            <img
-              alt="Product Image"
-              className="w-full h-48 object-cover"
-              height={300}
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "400/300",
-                objectFit: "cover",
-              }}
-              width={400}
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">Stylish Sunglasses</h3>
-              <p className="text-gray-700 dark:text-gray-400 mb-4">
-                Protect your eyes in style with these fashionable sunglasses.
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-indigo-600 font-medium">$29.99</span>
-                <Button size="sm">Add to Cart</Button>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default Shop;
+
 
 const SearchIcon=(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>)=> {
   return (
