@@ -1,9 +1,16 @@
+"use client";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { JSX, SVGProps } from "react"
+import { JSX, SVGProps, useState } from "react"
 import {products} from "../data/products"
 
 const Shop = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="bg-white dark:bg-gray-950 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -17,12 +24,13 @@ const Shop = () => {
               className="block w-full pl-10 pr-4 py-2 border border-gray-200 border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-50 dark:border-gray-800"
               placeholder="Search products..."
               type="text"
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <div key={product.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
               <img
                 alt="Product Image"
