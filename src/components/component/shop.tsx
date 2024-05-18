@@ -1,11 +1,35 @@
 "use client";
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { JSX, SVGProps, useState } from "react"
-import {products} from "../data/products"
+
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { JSX, SVGProps, useState, useEffect } from "react";
+import axios from "axios";
+import { Product } from "../types"; 
 
 const Shop = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/products/')
+      .then((response) => {
+        const fetchedProducts = response.data.map((item: any) => ({
+          id: item.product_id,
+          name: item.product_name,
+          photo: item.product_photo,
+          brand: item.product_brand,
+          price: item.product_price,
+          description: item.product_description,
+          category: item.product_category,
+          quantity: item.product_quantity,
+          model_id: item.product_model_id,
+        }));
+        setProducts(fetchedProducts);
+      })
+      .catch((error) => {
+        console.error('Error fetching products:', error);
+      });
+  }, []);
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -27,15 +51,14 @@ const Shop = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-        
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6  ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
             <div key={product.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
               <img
                 alt="Product Image"
                 className="w-full h-48 object-cover"
-                src={product.image}
+                src={product.photo}
                 style={{
                   aspectRatio: '400/300',
                   objectFit: 'cover',
@@ -43,7 +66,9 @@ const Shop = () => {
               />
               <div className="p-4">
                 <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">{product.name}</h3>
+                <h4 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">{product.brand}</h4>
                 <p className="text-gray-700 dark:text-gray-400 mb-4">{product.description}</p>
+                <p className="text-gray-700 dark:text-gray-400 mb-4">{product.quantity}</p>
                 <div className="flex items-center justify-between">
                   <span className="text-indigo-600 font-medium">${product.price}</span>
                   <Button size="sm">Add to Cart</Button>
@@ -59,8 +84,7 @@ const Shop = () => {
 
 export default Shop;
 
-
-const SearchIcon=(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>)=> {
+const SearchIcon = (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => {
   return (
     <svg
       {...props}
@@ -77,5 +101,5 @@ const SearchIcon=(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>)=> {
       <circle cx="11" cy="11" r="8" />
       <path d="m21 21-4.3-4.3" />
     </svg>
-  )
-}
+  );
+};
