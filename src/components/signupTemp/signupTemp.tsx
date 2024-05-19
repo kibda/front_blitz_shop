@@ -7,11 +7,16 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import Link from 'next/link';
 import axios from 'axios';
+import { useToast } from "../ui/use-toast";
+import { ToastAction } from "../ui/toast";
+import { useRouter } from "next/navigation";
 
 export function SignupTemplate() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { toast } = useToast();
+  const router = useRouter();
 
   const signup = async () => {
     try {
@@ -22,6 +27,12 @@ export function SignupTemplate() {
       }, { withCredentials: true });
 
       console.log(response.data);
+      toast({
+        title: "Account created successfully!",
+        action: <ToastAction altText="ok">ok</ToastAction>,
+      })
+      router.push('/login');
+
     } catch (error) {
       console.error(error);
     }

@@ -12,6 +12,8 @@ import axios from 'axios';
 import { useAppContext } from "@/contexts/UserContext";
 // import usePersistedState from "@/Persistence";
 import Router, { useRouter } from "next/navigation";
+import { ToastAction } from "../ui/toast";
+import { useToast } from "../ui/use-toast";
 
 
 
@@ -26,6 +28,7 @@ export function LoginTemplate() {
   // const [userData, setUserData] =  usePersistedState('userData', null);
   const [userDataContxt, setUserDataContxt] = useAppContext();
   const router = useRouter();
+  const { toast } = useToast();
 
   const login = async () => {
     try {
@@ -37,6 +40,11 @@ export function LoginTemplate() {
       console.log(response.data);
       // setUserData(response.data.user);
       setUserDataContxt(response.data.user);
+      toast({
+        title: "Loggin successfully!",
+        action: <ToastAction altText="ok">ok</ToastAction>,
+      })
+      
       router.push('/');
     } catch (error) {
       console.error(error);
