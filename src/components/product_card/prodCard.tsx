@@ -11,13 +11,14 @@ const ProdCard = ({product}) => {
                 className="w-full  object-scale-down"
                 src={product.photo}
                 style={{
-                  aspectRatio: '5/4',
+                  aspectRatio: '400/300',
+
                 }}
               />
               <div className="p-4">
                 <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">{product.name}</h3>
                 <h4 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">{product.brand}</h4>
-                <p className="text-gray-700 dark:text-gray-400 mb-4">{product.description}</p>
+                <p className="text-gray-700 dark:text-gray-400 mb-4">{product.description.slice(0, 25) + (product.description.length > 25 ? '...' : '')}</p>
                 <p className="text-gray-700 dark:text-gray-400 mb-4">{product.quantity}</p>
                 <div className="flex items-center justify-between">
                   <span className="text-indigo-600 font-medium">${product.price}</span>

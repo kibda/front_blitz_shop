@@ -22,7 +22,7 @@ const Home1 = () => {
               alt="Hero Product"
               className="max-w-full rounded-lg shadow-lg"
               height="500"
-              src="/placeholder.svg"
+              src="/home.jpg"
               style={{
                 aspectRatio: "500/500",
                 objectFit: "cover",
