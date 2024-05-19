@@ -10,7 +10,7 @@ import { useContext, useState } from "react";
 import Link from 'next/link'
 import axios from 'axios';
 import { useAppContext } from "@/contexts/UserContext";
-import usePersistedState from "@/Persistence";
+// import usePersistedState from "@/Persistence";
 import Router, { useRouter } from "next/navigation";
 
 
@@ -23,7 +23,7 @@ export function LoginTemplate() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const [userData, setUserData] =  usePersistedState('userData', null);
+  // const [userData, setUserData] =  usePersistedState('userData', null);
   const [userDataContxt, setUserDataContxt] = useAppContext();
   const router = useRouter();
 
@@ -35,7 +35,7 @@ export function LoginTemplate() {
       }, { withCredentials: true });
 
       console.log(response.data);
-      setUserData(response.data.user);
+      // setUserData(response.data.user);
       setUserDataContxt(response.data.user);
       router.push('/');
     } catch (error) {
