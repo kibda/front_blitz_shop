@@ -8,10 +8,12 @@ import { CardHeader, CardContent, Card } from "@/components/ui/card"
 
 import { useEffect, useState } from "react"
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export function ViewProd({id}) {
 
   const [product, setProduct] = useState(null);
+  const router=useRouter();
 
 useEffect(() => {
   if (id) {
@@ -69,6 +71,19 @@ useEffect(() => {
                   <HeartIcon className="w-4 h-4 mr-2" />
                   Add to Wishlist
                 </Button>
+                <div className="flex justify-end gap-2">
+                  
+            <Button 
+            className="bg-green-500 text-white hover:bg-green-600" variant="outline"
+            onClick={()=>{ router.push(`/products/view/${product.product_id}/edit/`) }}
+            >
+              Update
+            </Button>
+            
+            <Button className="bg-red-500 text-white hover:bg-red-600" variant="outline">
+              Delete
+            </Button>
+          </div>
               </div>
             </div>
           </div>
@@ -81,7 +96,7 @@ useEffect(() => {
           </div>
         </div>
         <div className="grid gap-3 items-start">
-          <div className="flex md:hidden items-start">
+          {/* <div className="flex md:hidden items-start">
             <div className="grid gap-4">
               <h1 className="font-bold text-2xl sm:text-3xl">Acme Prism Tee: The Cozy Chromatic Blend</h1>
               <div className="flex items-center gap-4">
@@ -99,7 +114,7 @@ useEffect(() => {
               </div>
               <div className="text-3xl font-bold">$99.99</div>
             </div>
-          </div>
+          </div> */}
           <div className="grid gap-4">
             <img
               alt="Product Image"
@@ -108,227 +123,15 @@ useEffect(() => {
               src={product.product_photo}
               width={600}
             />
-            {/* 
-            <div className="hidden md:flex gap-4 items-start">
-              <button className="border hover:border-gray-900 rounded-lg overflow-hidden transition-colors dark:hover:border-gray-50">
-                <img
-                  alt="Preview thumbnail"
-                  className="aspect-square object-cover"
-                  height={100}
-                  src="/placeholder.svg"
-                  width={100}
-                />
-                <span className="sr-only">View Image 1</span>
-              </button>
-              <button className="border hover:border-gray-900 rounded-lg overflow-hidden transition-colors dark:hover:border-gray-50">
-                <img
-                  alt="Preview thumbnail"
-                  className="aspect-square object-cover"
-                  height={100}
-                  src="/placeholder.svg"
-                  width={100}
-                />
-                <span className="sr-only">View Image 2</span>
-              </button>
-              <button className="border hover:border-gray-900 rounded-lg overflow-hidden transition-colors dark:hover:border-gray-50">
-                <img
-                  alt="Preview thumbnail"
-                  className="aspect-square object-cover"
-                  height={100}
-                  src="/placeholder.svg"
-                  width={100}
-                />
-                <span className="sr-only">View Image 3</span>
-              </button>
-              <button className="border hover:border-gray-900 rounded-lg overflow-hidden transition-colors dark:hover:border-gray-50">
-                <img
-                  alt="Preview thumbnail"
-                  className="aspect-square object-cover"
-                  height={100}
-                  src="/placeholder.svg"
-                  width={100}
-                />
-                <span className="sr-only">View Image 4</span>
-              </button>
-              <button className="border hover:border-gray-900 rounded-lg overflow-hidden transition-colors dark:hover:border-gray-50">
-                <img
-                  alt="Preview thumbnail"
-                  className="aspect-square object-cover"
-                  height={100}
-                  src="/placeholder.svg"
-                  width={100}
-                />
-                <span className="sr-only">View Image 4</span>
-              </button>
-            </div>   */}
+           
           </div>
         </div>
       </div>
 
-      {/* 
+     
        
-      <div className="bg-gray-100 dark:bg-gray-800 py-12 md:py-24 lg:py-32">
-        <div className="container max-w-6xl px-4 md:px-6">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <Card>
-              <CardHeader>
-                <img
-                  alt="Related Product 1"
-                  className="aspect-square object-cover rounded-t-lg"
-                  height={300}
-                  src="/placeholder.svg"
-                  width={300}
-                />
-              </CardHeader>
-              <CardContent className="p-4">
-                <h3 className="font-semibold text-lg">Acme Prism Tee: The Cozy Chromatic Blend</h3>
-                <div className="flex items-center gap-2 mt-2">
-                  <div className="flex items-center gap-0.5">
-                    <StarIcon className="w-4 h-4 fill-primary" />
-                    <StarIcon className="w-4 h-4 fill-primary" />
-                    <StarIcon className="w-4 h-4 fill-primary" />
-                    <StarIcon className="w-4 h-4 fill-muted stroke-muted-foreground" />
-                    <StarIcon className="w-4 h-4 fill-muted stroke-muted-foreground" />
-                  </div>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">(4.3 / 5)</span>
-                </div>
-                <div className="mt-4">
-                  <p className="text-gray-500 dark:text-gray-400">
-                    60% combed ringspun cotton/40% polyester jersey tee.
-                  </p>
-                </div>
-                <div className="mt-4 font-bold text-lg">$99.99</div>
-                <div className="mt-4">
-                  <Button size="sm">Add to Cart</Button>
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <img
-                  alt="Related Product 2"
-                  className="aspect-square object-cover rounded-t-lg"
-                  height={300}
-                  src="/placeholder.svg"
-                  width={300}
-                />
-              </CardHeader>
-              <CardContent className="p-4">
-                <h3 className="font-semibold text-lg">Acme Prism Tee: The Cozy Chromatic Blend</h3>
-                <div className="flex items-center gap-2 mt-2">
-                  <div className="flex items-center gap-0.5">
-                    <StarIcon className="w-4 h-4 fill-primary" />
-                    <StarIcon className="w-4 h-4 fill-primary" />
-                    <StarIcon className="w-4 h-4 fill-primary" />
-                    <StarIcon className="w-4 h-4 fill-muted stroke-muted-foreground" />
-                    <StarIcon className="w-4 h-4 fill-muted stroke-muted-foreground" />
-                  </div>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">(4.3 / 5)</span>
-                </div>
-                <div className="mt-4">
-                  <p className="text-gray-500 dark:text-gray-400">
-                    60% combed ringspun cotton/40% polyester jersey tee.
-                  </p>
-                </div>
-                <div className="mt-4 font-bold text-lg">$99.99</div>
-                <div className="mt-4">
-                  <Button size="sm">Add to Cart</Button>
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <img
-                  alt="Related Product 3"
-                  className="aspect-square object-cover rounded-t-lg"
-                  height={300}
-                  src="/placeholder.svg"
-                  width={300}
-                />
-              </CardHeader>
-              <CardContent className="p-4">
-                <h3 className="font-semibold text-lg">Acme Prism Tee: The Cozy Chromatic Blend</h3>
-                <div className="flex items-center gap-2 mt-2">
-                  <div className="flex items-center gap-0.5">
-                    <StarIcon className="w-4 h-4 fill-primary" />
-                    <StarIcon className="w-4 h-4 fill-primary" />
-                    <StarIcon className="w-4 h-4 fill-primary" />
-                    <StarIcon className="w-4 h-4 fill-muted stroke-muted-foreground" />
-                    <StarIcon className="w-4 h-4 fill-muted stroke-muted-foreground" />
-                  </div>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">(4.3 / 5)</span>
-                </div>
-                <div className="mt-4">
-                  <p className="text-gray-500 dark:text-gray-400">
-                    60% combed ringspun cotton/40% polyester jersey tee.
-                  </p>
-                </div>
-                <div className="mt-4 font-bold text-lg">$99.99</div>
-                <div className="mt-4">
-                  <Button size="sm">Add to Cart</Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </div>
-      <div className="container max-w-6xl px-4 md:px-6 py-12 md:py-24 lg:py-32">
-        <div className="grid gap-8">
-          <div>
-            <h2 className="text-3xl font-bold mb-4">Customer Reviews</h2>
-            <div className="grid gap-6">
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="flex items-center gap-0.5">
-                      <StarIcon className="w-5 h-5 fill-primary" />
-                      <StarIcon className="w-5 h-5 fill-primary" />
-                      <StarIcon className="w-5 h-5 fill-primary" />
-                      <StarIcon className="w-5 h-5 fill-primary" />
-                      <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
-                    </div>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">4.5 / 5</span>
-                  </div>
-                  <div>
-                    <p>
-                      This is the most comfortable and stylish t-shirt I ve ever owned. The quality is amazing and the fit is perfect. Highly recommend!
-                    </p>
-                  </div>
-                  <div className="mt-4 flex items-center gap-2">
-                    <img
-                      alt="User Avatar"
-                      className="rounded-full"
-                      height={40}
-                      src="/placeholder.svg"
-                      style={{
-                        aspectRatio: "40/40",
-                        objectFit: "cover",
-                      }}
-                      width={40}
-                    />
-                    <div>
-                      <h4 className="font-semibold">Jane Doe</h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Verified Buyer</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="flex items-center gap-0.5">
-                      <StarIcon className="w-5 h-5 fill-primary" />
-                      <StarIcon className="w-5 h-5 fill-primary" />
-                      <StarIcon className="w-5 h-5 fill-primary" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </div>
-    */}
+     
+    
     </>
     )}
 </>
