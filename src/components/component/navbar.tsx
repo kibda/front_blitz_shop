@@ -7,14 +7,13 @@ import { useAppContext } from "@/contexts/UserContext";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-// import usePersistedState from "@/Persistence";
 import Cart from "../navbar/cart";
 
 
 
 export function NavbarTemp() {
   // const [userData, setUserData] =  usePersistedState('userData', null);
-  const [userDataContxt, setUserDataContxt] = useAppContext();
+  const {userDataContxt, setUserDataContxt} = useAppContext();
   
   // const [localData, setLocalData] = useState(userData ?userData: null);
   const router = useRouter();

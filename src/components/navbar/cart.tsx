@@ -6,15 +6,45 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { CardContent, CardFooter, Card } from "@/components/ui/card"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import CartItem from "./CartItem"
+import { useAppContext } from "@/contexts/UserContext"
+
+
 
 const Cart = () => {
+
+  let {cart, setCart} = useAppContext();
+  
+  
+
+
+const handleDrawerClose = () => {
+  
+  if (cart.length === 0) {
+    return;
+  }
+  try {
+    const cartItems = cart.map(item => ({ id: item.product_id, quantity: item.quantity }));
+    const response = axios.post(`${process.env.NEXT_PUBLIC_API}cart/update/`, {
+      cart: cartItems
+    }, { withCredentials: true });
+  } catch (error) {
+    console.error('Failed to fetch user acrt:', error);
+  }
+}
+
+
+ const sum = cart.reduce((acc, item) => acc + (parseFloat(item.product.product_price) * item.quantity), 0).toFixed(2);
+
   return (
-    <Drawer  >
+    <Drawer  onClose={handleDrawerClose} >
               <DrawerTrigger asChild>
                 <div className="relative cursor-pointer mr-3">
                   <ShoppingCartIcon className="h-6 w-6" />
                   <Badge className="absolute -top-2 -right-2 rounded-full bg-primary px-2 py-0.5 text-xs font-medium text-white">
-                    3
+                    {cart.length}
                   </Badge>
                 </div>
               </DrawerTrigger>
@@ -25,71 +55,20 @@ const Cart = () => {
                 </DrawerHeader>
                 <div className="px-4 py-6">
                   <div className="grid gap-6">
-                    <div className="flex items-center gap-4">
-                      <img
-                        alt="Product Image"
-                        className="rounded-md object-cover"
-                        height="64"
-                        src="/placeholder.svg"
-                        style={{
-                          aspectRatio: "64/64",
-                          objectFit: "cover",
-                        }}
-                        width="64"
-                      />
-                      <div className="flex-1">
-                        <h4 className="font-medium">Product Name</h4>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">$49.99</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Button size="icon" variant="ghost">
-                          <MinusIcon className="h-4 w-4" />
-                        </Button>
-                        <span>1</span>
-                        <Button size="icon" variant="ghost">
-                          <PlusIcon className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <Button size="icon" variant="ghost">
-                        <TrashIcon className="h-4 w-4" />
-                      </Button>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <img
-                        alt="Product Image"
-                        className="rounded-md object-cover"
-                        height="64"
-                        src="/placeholder.svg"
-                        style={{
-                          aspectRatio: "64/64",
-                          objectFit: "cover",
-                        }}
-                        width="64"
-                      />
-                      <div className="flex-1">
-                        <h4 className="font-medium">Another Product</h4>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">$29.99</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Button size="icon" variant="ghost">
-                          <MinusIcon className="h-4 w-4" />
-                        </Button>
-                        <span>2</span>
-                        <Button size="icon" variant="ghost">
-                          <PlusIcon className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <Button size="icon" variant="ghost">
-                        <TrashIcon className="h-4 w-4" />
-                      </Button>
-                    </div>
+                  { cart.map((item) => (
+                      <CartItem key={item.product_id}  item={item}  cartState={{ cart, setCart }} />
+                  ))}
+
+                    
+                    
+
                   </div>
                 </div>
                 <DrawerFooter>
                   <div className="grid gap-2">
                     <div className="flex items-center justify-between">
                       <span>Subtotal</span>
-                      <span className="font-medium">$79.98</span>
+                      <span className="font-medium">{  sum    }</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span>Shipping</span>
@@ -98,13 +77,13 @@ const Cart = () => {
                     <Separator />
                     <div className="flex items-center justify-between font-medium">
                       <span>Total</span>
-                      <span>$84.98</span>
+                      <span>{sum+5}</span>
                     </div>
                   </div>
                   <div className="flex gap-2 mt-4">
                     <Button className="flex-1">Checkout</Button>
                     <DrawerClose asChild>
-                      <Button className="flex-1" variant="outline">
+                      <Button className="flex-1" variant="outline" onClick={handleDrawerClose} >
                         Continue Shopping
                       </Button>
                     </DrawerClose>

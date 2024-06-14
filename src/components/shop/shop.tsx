@@ -16,7 +16,7 @@ const Shop = () => {
     axios.get('http://localhost:8000/products/')
       .then((response) => {
         const fetchedProducts = response.data.products.map((item: any) => ({
-          id: item.product_id,
+          id: item.id,
           name: item.product_name,
           photo: item.product_photo,
           brand: item.product_brand,

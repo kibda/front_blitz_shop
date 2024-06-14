@@ -20,7 +20,7 @@ const EditProd = ({ params }) => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/products/detail/${params.id}`);
-        const item = response.data.product; // Access nested product object
+        const item = response.data.product; 
         if (formRef.current) {
           formRef.current.elements.id.value = item.product_id;
           formRef.current.elements.name.value = item.product_name;
@@ -36,7 +36,6 @@ const EditProd = ({ params }) => {
         console.error('Error fetching product:', error);
       }
     };
-
     fetchProduct();
   }, [params.id]);
 

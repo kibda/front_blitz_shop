@@ -6,13 +6,25 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { CardHeader, CardContent, Card } from "@/components/ui/card";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useAppContext } from "@/contexts/UserContext";
 
 export function ViewProd({ id }) {
   const [product, setProduct] = useState(null);
   const router = useRouter();
+  let {cart, setCart} = useAppContext();
+  let [prodInCart, setProdInCart] = useState( cart.find((cartItem) => cartItem.product.id == id)!==undefined);
+  // console.log("hedha test",cart.map((cartItem) => cartItem.product.id));
+  // console.log("hedha test id ",id);
+  const [quantity, setQuantity] = useState(1);
+
+
+  useEffect(() => {
+    console.log("cart tbadel");
+    setProdInCart(cart.find((cartItem) => cartItem.product.id == id)!==undefined);
+  }, [cart]);
 
   useEffect(() => {
     if (id) {
@@ -27,16 +39,36 @@ export function ViewProd({ id }) {
     }
   }, [id]);
 
-  const handleDelete = () => {
-    axios.delete(`${process.env.NEXT_PUBLIC_API}/products/delete/${id}`)
-      .then(() => {
-        console.log('Product deleted successfully');
-        router.push('/products'); 
-      })
-      .catch(error => {
-        console.error('Error deleting product:', error);
-      });
-  };
+  
+
+  const handleAddToCart = async () => {
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}cart/add/`,{
+      product_id: product.id,
+      quantity: quantity
+  }, { withCredentials: true });
+  }
+  catch (error) {
+      console.error('Failed to fetch user acrt:', error);
+  }
+  
+  setCart([...cart, {
+    product: {
+      id: product.id,
+      product_name: product.product_name,
+      product_price: product.product_price,
+      product_photo: product.product_photo,
+      product_description: product.product_description,
+      product_brand: product.product_brand,
+      product_category: product.product_category,
+      product_model_id: product.product_model_id,
+      product_quantity: product.product_quantity
+    },
+    quantity: quantity
+  }]);
+  setProdInCart(true);
+  
+  }
 
   return (
     <>
@@ -56,44 +88,35 @@ export function ViewProd({ id }) {
                   <div>
                     <p className="text-gray-500 dark:text-gray-400">Look out for special offers...</p>
                   </div>
-                  <div className="flex items-center gap-2">
+                  { !prodInCart && <div className="flex items-center gap-2">
                     <Label className="text-base" htmlFor="quantity">Quantity</Label>
-                    <Select defaultValue="1">
+                    <Select defaultValue={quantity.toString()} onValueChange={(newValue) => {
+                      console.log(parseInt(newValue));
+                      setQuantity(parseInt(newValue)); }} >
                       <SelectTrigger>
                         <SelectValue placeholder="Select" />
                       </SelectTrigger>
                       <SelectContent>
                         {Array.from({ length: product.product_quantity }, (_, index) => (
-                          <SelectItem key={index} value={String(index + 1)}>
+                          <SelectItem key={index} value={String(index + 1)}  >
                             {index + 1}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                     <span className="text-gray-500 dark:text-gray-400">({product.product_quantity} in stock)</span>
-                  </div>
+                  </div>}
                   <div className="flex gap-2">
-                    <Button size="lg">Add to Cart</Button>
+                  {prodInCart ? 
+                  <Button size="lg" variant="ghost" disabled>Added to Cart</Button> 
+                    :
+                  <Button size="lg" onClick={handleAddToCart} >Add to Cart</Button>
+                  }
                     <Button size="lg" variant="outline">
                       <HeartIcon className="w-4 h-4 mr-2" />
                       Add to Wishlist
                     </Button>
-                    <div className="flex justify-end gap-2">
-                      <Button 
-                        className="bg-green-500 text-white hover:bg-green-600" 
-                        variant="outline"
-                        onClick={() => router.push(`/products/view/${product.product_id}/edit/`)}
-                      >
-                        Update
-                      </Button>
-                      <Button 
-                        className="bg-red-500 text-white hover:bg-red-600" 
-                        variant="outline"
-                        onClick={handleDelete}
-                      >
-                        Delete
-                      </Button>
-                    </div>
+                    
                   </div>
                 </div>
               </div>

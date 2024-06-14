@@ -25,7 +25,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Add any necessary meta tags, title, stylesheets, etc. */}
       </head>
       <body className={inter.className}>
       <AppWrapper>

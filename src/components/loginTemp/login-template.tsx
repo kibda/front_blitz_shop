@@ -41,7 +41,7 @@ export function LoginTemplate() {
       // setUserData(response.data.user);
       setUserDataContxt(response.data.user);
       toast({
-        title: "Loggin successfully!",
+        title: "Loggin successful !",
         action: <ToastAction altText="ok">ok</ToastAction>,
       })
       

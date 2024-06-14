@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { createContext, use, useContext, useEffect, useState } from 'react'
 
-// Initialize the context with null
+// init contxt wth null
 const AppContext = createContext(null);
 
 export function AppWrapper({ children } : {
@@ -11,7 +11,20 @@ export function AppWrapper({ children } : {
     }) {
     //  const initialUserData = JSON.parse(localStorage.getItem('userData')) || {};
     let [userDataContxt, setUserDataContxt] = useState({})
+    let [cart, setCart] = useState([]);
     const router = useRouter();
+
+
+    const fetchCart = async () => {
+        try {
+          const resp = await axios.get(`${process.env.NEXT_PUBLIC_API}cart/view/`, { withCredentials: true });
+          setCart(resp.data.data);
+          console.log(resp.data.data);
+        }
+        catch (error) {
+          console.error('Failed to fetch user acrt:', error);
+        }
+      }
 
 
     useEffect(() => {
@@ -22,6 +35,7 @@ export function AppWrapper({ children } : {
               });
               if (response.status === 200) {
                   setUserDataContxt(response.data.user);
+                    fetchCart();
               } else {
                   setUserDataContxt(null);
                   router.push('/login');
@@ -36,8 +50,10 @@ export function AppWrapper({ children } : {
       fetchUser();
   }, []);
 
+
+
     return (
-    <AppContext.Provider value={[userDataContxt, setUserDataContxt]}>
+        <AppContext.Provider value={{ userDataContxt, setUserDataContxt, cart, setCart }}>
     {children}
     </AppContext.Provider >
     )
