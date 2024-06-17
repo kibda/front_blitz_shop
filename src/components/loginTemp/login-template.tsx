@@ -9,11 +9,12 @@ import { useContext, useState } from "react";
 
 import Link from 'next/link'
 import axios from 'axios';
-import { useAppContext } from "@/contexts/UserContext";
+
 // import usePersistedState from "@/Persistence";
 import Router, { useRouter } from "next/navigation";
 import { ToastAction } from "../ui/toast";
 import { useToast } from "../ui/use-toast";
+import { useAppContext } from "@/contexts/UserContext";
 
 
 
@@ -26,9 +27,10 @@ export function LoginTemplate() {
   const [password, setPassword] = useState('');
 
   // const [userData, setUserData] =  usePersistedState('userData', null);
-  const [userDataContxt, setUserDataContxt] = useAppContext();
+  const {userDataContxt, setUserDataContxt} = useAppContext();
   const router = useRouter();
   const { toast } = useToast();
+  const { cart, setCart } = useAppContext();
 
   const login = async () => {
     try {
@@ -38,18 +40,32 @@ export function LoginTemplate() {
       }, { withCredentials: true });
 
       console.log(response.data);
-      // setUserData(response.data.user);
-      setUserDataContxt(response.data.user);
+      if ( response.data.message=="Login successful" ) {
+        setUserDataContxt(response.data.user);
+        fetchCart();
       toast({
         title: "Loggin successful !",
         action: <ToastAction altText="ok">ok</ToastAction>,
       })
       
       router.push('/');
+      }
+      
     } catch (error) {
       console.error(error);
     }
   };
+
+  const fetchCart = async () => {
+    try {
+      const resp = await axios.get(`${process.env.NEXT_PUBLIC_API}cart/view/`, { withCredentials: true });
+      setCart(resp.data.data);
+      console.log(resp.data.data);
+    }
+    catch (error) {
+      console.error('Failed to fetch user acrt:', error);
+    }
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">

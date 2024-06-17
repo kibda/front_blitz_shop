@@ -10,12 +10,21 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import CartItem from "./CartItem"
 import { useAppContext } from "@/contexts/UserContext"
+import { useRouter } from "next/navigation"
 
 
 
 const Cart = () => {
 
   let {cart, setCart} = useAppContext();
+  let router = useRouter();
+
+  const handleCheckout = () => {
+    // Your logic to close the drawer goes here
+
+    // Navigate to the checkout page with shallow routing
+    router.push("/checkout");
+  };
   
   
 
@@ -36,7 +45,7 @@ const handleDrawerClose = () => {
 }
 
 
- const sum = cart.reduce((acc, item) => acc + (parseFloat(item.product.product_price) * item.quantity), 0).toFixed(2);
+ const sum = cart && cart!=undefined && cart.reduce((acc, item) => acc + (parseFloat(item.product.product_price) * item.quantity), 0).toFixed(2);
 
   return (
     <Drawer  onClose={handleDrawerClose} >
@@ -81,7 +90,17 @@ const handleDrawerClose = () => {
                     </div>
                   </div>
                   <div className="flex gap-2 mt-4">
-                    <Button className="flex-1">Checkout</Button>
+                  
+                  <DrawerClose asChild>
+                    <Button className="flex-1" onClick={()=>{
+                      handleDrawerClose();
+                      handleCheckout();
+                    
+                    }} > 
+                      Checkout
+                        </Button>
+                        </DrawerClose>
+                    
                     <DrawerClose asChild>
                       <Button className="flex-1" variant="outline" onClick={handleDrawerClose} >
                         Continue Shopping
